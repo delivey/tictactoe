@@ -1,6 +1,7 @@
 // g++ main.cpp -o tictactoe.exe && ./tictactoe.exe
 #include <iostream>
 #include <unordered_map>
+#include <stdlib.h>
 
 int enterMove(int player) {
     int moved; 
@@ -10,9 +11,15 @@ int enterMove(int player) {
     return moved;
 }
 
+int makeMove(int move, int playerTurn) {
+    return 0;
+}
+
 int main() {
     bool gameEnded = false;
-    bool playerTurn = 1;
+    bool playerTurn = 0;
+    char playerZeroSymbol = 'O';
+    char playerOneSymbol = 'X';
     std::unordered_map<int, char> board({
         { 1, '1' }, { 2, '2' }, { 3, '3' },
         { 4, '4' }, { 5, '5' }, { 6, '6' },
@@ -20,6 +27,7 @@ int main() {
     });
 
     while (!gameEnded) {
+        system("cls");
         auto one = board.find(1)->second;
         auto two = board.find(2)->second;
         auto three = board.find(3)->second;
@@ -40,6 +48,7 @@ int main() {
         "-------------------\n";
         printf(renderBoard, one, two, three, four, five, six, seven, eight, nine);
         int move = enterMove(playerTurn);
+        makeMove(move, playerTurn);
         playerTurn = !playerTurn;
     };
 }
