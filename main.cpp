@@ -11,15 +11,20 @@ int enterMove(int player) {
     return moved;
 }
 
-int makeMove(int move, int playerTurn) {
+int makeMove(int move, int playerTurn, std::unordered_map<int, char> &board) {
+    std::unordered_map<int, char> players({
+        {0, 'X'},
+        {1, 'O'}
+    });
+    char symbol = players.find(playerTurn)->second;
+    std::cout << symbol << std::endl;
+    board.at(move) = symbol;
     return 0;
 }
 
 int main() {
     bool gameEnded = false;
     bool playerTurn = 0;
-    char playerZeroSymbol = 'O';
-    char playerOneSymbol = 'X';
     std::unordered_map<int, char> board({
         { 1, '1' }, { 2, '2' }, { 3, '3' },
         { 4, '4' }, { 5, '5' }, { 6, '6' },
@@ -48,7 +53,7 @@ int main() {
         "-------------------\n";
         printf(renderBoard, one, two, three, four, five, six, seven, eight, nine);
         int move = enterMove(playerTurn);
-        makeMove(move, playerTurn);
+        makeMove(move, playerTurn, board);
         playerTurn = !playerTurn;
     };
 }
