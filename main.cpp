@@ -11,20 +11,30 @@ int enterMove(int player) {
 }
 
 int main() {
-    std::unordered_map<int, std::string> board({
-        { 1, "1" }, { 2, "2" }, { 3, "3" },
-        { 4, "4" }, { 5, "5" }, { 6, "6" },
-        { 7, "7" }, { 8, "8" }, { 9, "9" }
+    std::unordered_map<int, char> board({
+        { 1, '1' }, { 2, '2' }, { 3, '3' },
+        { 4, '4' }, { 5, '5' }, { 6, '6' },
+        { 7, '7' }, { 8, '8' }, { 9, '9'}
     });
+
+    auto one = board.find(1);
+    auto two = board.find(2);
+    auto three = board.find(3);
+    auto four = board.find(4);
+    auto five = board.find(5);
+    auto six = board.find(6);
+    auto seven = board.find(7);
+    auto eight = board.find(8);
+    auto nine = board.find(9);
+
     const char *renderBoard =
     "-------------------\n"
-    "|  x  |  x  |  x  |\n"
+    "|  %c  |  %c  |  %c  |\n"
     "-------------------\n"
-    "|  x  |  x  |  x  |\n"
+    "|  %c  |  %c  |  %c  |\n"
     "-------------------\n"
-    "|  x  |  x  |  x  |\n"
+    "|  %c  |  %c  |  %c  |\n"
     "-------------------\n";
-    std::cout << renderBoard << std::endl;
-    enterMove(1);
-    return 0;
+    printf(renderBoard, one->second, two->second, three->second, four->second, five->second, six->second, seven->second, eight->second, nine->second);
+    int move = enterMove(1);
 }
