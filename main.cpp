@@ -1,7 +1,9 @@
 // g++ main.cpp -o tictactoe.exe && ./tictactoe.exe
+#include <ctype.h>
 #include <iostream>
 #include <unordered_map>
 #include <stdlib.h>
+#include <stdio.h>
 
 int enterMove(int player) {
     int moved; 
@@ -11,15 +13,26 @@ int enterMove(int player) {
     return moved;
 }
 
+int checkForWin(std::unordered_map<int, char> &board) {
+    for (auto& square: board) {
+        // std::cout << square.first << " " << square.second << std::endl;
+    }
+    return 0;
+}
+
 int makeMove(int move, int playerTurn, std::unordered_map<int, char> &board) {
     std::unordered_map<int, char> players({
         {0, 'X'},
         {1, 'O'}
     });
     char symbol = players.find(playerTurn)->second;
-    std::cout << symbol << std::endl;
-    board.at(move) = symbol;
-    return 0;
+    char symbolOnBoard = board.find(move)->second;
+    if (!isalpha(symbolOnBoard)) {
+        board.at(move) = symbol;
+        return 0;
+    } else {
+        return 1;
+    }
 }
 
 int main() {
@@ -32,7 +45,6 @@ int main() {
     });
 
     while (!gameEnded) {
-        system("cls");
         auto one = board.find(1)->second;
         auto two = board.find(2)->second;
         auto three = board.find(3)->second;
@@ -53,7 +65,9 @@ int main() {
         "-------------------\n";
         printf(renderBoard, one, two, three, four, five, six, seven, eight, nine);
         int move = enterMove(playerTurn);
+        system("cls");
         makeMove(move, playerTurn, board);
+        checkForWin(board);
         playerTurn = !playerTurn;
     };
 }
