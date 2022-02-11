@@ -13,9 +13,20 @@ int enterMove(int player) {
     return moved;
 }
 
+void renderGameOver() {
+    std::cout << "Game Over!" << std::endl;
+}
+
 int checkForWin(std::unordered_map<int, char> &board) {
+    char lastSymbol;
+    int sameInARow = 1;
     for (auto& square: board) {
-        // std::cout << square.first << " " << square.second << std::endl;
+        if (square.second == lastSymbol) sameInARow++;
+        else sameInARow = 1;
+        lastSymbol = square.second;
+        if (square.first % 3 && sameInARow == 3) {
+            return 1;
+        }
     }
     return 0;
 }
@@ -45,6 +56,7 @@ int main() {
     });
 
     while (!gameEnded) {
+        system("cls");
         auto one = board.find(1)->second;
         auto two = board.find(2)->second;
         auto three = board.find(3)->second;
@@ -65,9 +77,12 @@ int main() {
         "-------------------\n";
         printf(renderBoard, one, two, three, four, five, six, seven, eight, nine);
         int move = enterMove(playerTurn);
-        system("cls");
         makeMove(move, playerTurn, board);
-        checkForWin(board);
+        int gameOver = checkForWin(board);
+        if (gameOver) {
+            gameEnded = true;
+            renderGameOver();
+        }
         playerTurn = !playerTurn;
     };
 }
