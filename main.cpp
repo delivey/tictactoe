@@ -16,6 +16,7 @@ std::unordered_map<int, char> board({
     { 7, '7' }, { 8, '8' }, { 9, '9'}
 });
 
+void clearScreen();
 int enterMove(int player);
 void renderGameOver(int player);
 int checkForWin();
@@ -93,8 +94,16 @@ char fb(int square) {
     return board.find(square)->second;
 }
 
-void renderBoard() {
+void clearScreen(){
+#ifdef _WIN32
     system("cls");
+#else
+    system("clear");
+#endif
+}
+
+void renderBoard() {
+	clearScreen();
     const char *renderBoard =
     "-------------------\n"
     "|  %c  |  %c  |  %c  |\n"
