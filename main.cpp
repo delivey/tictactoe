@@ -5,6 +5,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+const std::unordered_map<int, char> players({
+    {0, 'X'},
+    {1, 'O'}
+});
+
 int enterMove(int player) {
     int moved; 
     std::string playerS = std::to_string(player);
@@ -13,8 +18,10 @@ int enterMove(int player) {
     return moved;
 }
 
-void renderGameOver() {
-    std::cout << "Game Over!" << std::endl;
+void renderGameOver(int player) {
+    char playerSymbol = players.find(player)->second;
+    std::cout << "GAME OVER!" << std::endl; 
+    std::cout << "Player " << player << " (" << playerSymbol << ") won!";
 }
 
 int checkForWin(std::unordered_map<int, char> &board) {
@@ -42,10 +49,6 @@ int checkForWin(std::unordered_map<int, char> &board) {
 }
 
 int makeMove(int move, int playerTurn, std::unordered_map<int, char> &board) {
-    std::unordered_map<int, char> players({
-        {0, 'X'},
-        {1, 'O'}
-    });
     char symbol = players.find(playerTurn)->second;
     char symbolOnBoard = board.find(move)->second;
     if (!isalpha(symbolOnBoard)) {
@@ -66,7 +69,7 @@ int main() {
     });
 
     while (!gameEnded) {
-        // system("cls");
+        system("cls");
         auto one = board.find(1)->second;
         auto two = board.find(2)->second;
         auto three = board.find(3)->second;
@@ -91,7 +94,7 @@ int main() {
         int gameOver = checkForWin(board);
         if (gameOver) {
             gameEnded = true;
-            renderGameOver();
+            renderGameOver(playerTurn);
         }
         playerTurn = !playerTurn;
     };
