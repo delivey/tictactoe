@@ -18,13 +18,18 @@ void renderGameOver() {
 }
 
 int checkForWin(std::unordered_map<int, char> &board) {
-    char lastSymbol;
+    char lastSymbol = 'n';
     int sameInARow = 1;
     for (auto& square: board) {
+        if (isdigit(square.second)) {
+            lastSymbol = 'n'; // temp bypass of empty char
+            sameInARow = 1;
+        }
         if (square.second == lastSymbol) sameInARow++;
         else sameInARow = 1;
         lastSymbol = square.second;
         if (square.first % 3 && sameInARow == 3) {
+            std::cout << "END. Same in a row: " << sameInARow << " last Symbol: " << lastSymbol << std::endl;
             return 1;
         }
     }
@@ -56,7 +61,7 @@ int main() {
     });
 
     while (!gameEnded) {
-        system("cls");
+        // system("cls");
         auto one = board.find(1)->second;
         auto two = board.find(2)->second;
         auto three = board.find(3)->second;
