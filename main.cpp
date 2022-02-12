@@ -29,24 +29,14 @@ int checkForWin(std::unordered_map<int, char> &board) {
         else sameInARow = 1;
         lastSymbol = square.second;
 
-        // Horizontal
-        if (square.first % 3 && sameInARow == 3) {
-            return 1;
-        }
+        bool horizontal = square.first % 3 && sameInARow == 3;
+        bool vertical = square.first <= 3 && square.second == board.find(square.first+3)->second && square.second == board.find(square.first+6)->second;
 
-        // Vertical
-        if (square.first <= 3) {
-            char second = board.find(square.first+3)->second;
-            char third = board.find(square.first+6)->second;
-            if (square.second == second && square.second == third) {
-                return 1;
-            }
-        } 
+        bool diagonalTwo = board.find(3)->second == board.find(5)->second && board.find(5)->second == board.find(7)->second;
+        bool diagonalFour = board.find(1)->second == board.find(5)->second && board.find(5)->second == board.find(9)->second;
+        bool diagonal = diagonalTwo || diagonalFour;
 
-        // Diagonal
-        bool changeTwo = board.find(3)->second == board.find(5)->second && board.find(5)->second == board.find(7)->second;
-        bool changeFour = board.find(1)->second == board.find(5)->second && board.find(5)->second == board.find(9)->second;
-        if (changeTwo || changeFour) return 1;
+        if (horizontal || vertical || diagonal) return 1;
     }
     return 0;
 }
