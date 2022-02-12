@@ -28,10 +28,24 @@ int checkForWin(std::unordered_map<int, char> &board) {
         if (square.second == lastSymbol) sameInARow++;
         else sameInARow = 1;
         lastSymbol = square.second;
+
+        // Horizontal
         if (square.first % 3 && sameInARow == 3) {
             std::cout << "END. Same in a row: " << sameInARow << " last Symbol: " << lastSymbol << std::endl;
             return 1;
         }
+        //
+
+        // Vertical
+        if (square.first <= 3) {
+            char second = board.find(square.first+3)->second;
+            char third = board.find(square.first+6)->second;
+            if (square.second == second && square.second == third) {
+                std::cout << "END. Same in a row: " << sameInARow << " last Symbol: " << lastSymbol << std::endl;
+                return 1;
+            }
+        } 
+        //
     }
     return 0;
 }
