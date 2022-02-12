@@ -21,28 +21,19 @@ void renderGameOver(int player);
 int checkForWin();
 int makeMove(int move, int playerTurn);
 char fb(int square); // find board
+void renderBoard();
 
 int main() {
-    bool gameEnded = false;
+    int gameOver = 0;
     bool playerTurn = 0;
 
-    while (!gameEnded) {
-        system("cls");
-
-        const char *renderBoard =
-        "-------------------\n"
-        "|  %c  |  %c  |  %c  |\n"
-        "-------------------\n"
-        "|  %c  |  %c  |  %c  |\n"
-        "-------------------\n"
-        "|  %c  |  %c  |  %c  |\n"
-        "-------------------\n";
-        printf(renderBoard, fb(1), fb(2), fb(3), fb(4), fb(5), fb(6), fb(7), fb(8), fb(9));
+    while (!gameOver) {
+        renderBoard();
         int move = enterMove(playerTurn);
         makeMove(move, playerTurn);
-        int gameOver = checkForWin();
+        gameOver = checkForWin();
         if (gameOver) {
-            gameEnded = true;
+            renderBoard();
             renderGameOver(playerTurn);
         }
         playerTurn = !playerTurn;
@@ -100,4 +91,17 @@ int makeMove(int move, int playerTurn) {
 
 char fb(int square) {
     return board.find(square)->second;
+}
+
+void renderBoard() {
+    system("cls");
+    const char *renderBoard =
+    "-------------------\n"
+    "|  %c  |  %c  |  %c  |\n"
+    "-------------------\n"
+    "|  %c  |  %c  |  %c  |\n"
+    "-------------------\n"
+    "|  %c  |  %c  |  %c  |\n"
+    "-------------------\n";
+    printf(renderBoard, fb(1), fb(2), fb(3), fb(4), fb(5), fb(6), fb(7), fb(8), fb(9));
 }
